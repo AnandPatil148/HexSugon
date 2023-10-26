@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Photon.Pun;
 using UnityEngine;
 
-public class Hexagon : MonoBehaviourPunCallbacks
+public class Hexagon : MonoBehaviour
 {
 
     public Vector3 shrinkVector;
@@ -11,12 +10,7 @@ public class Hexagon : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        /*
-        if(!photonView.IsMine)
-        {
-            this.enabled = false;
-        }
-        */
+        
     }
 
     // Update is called once per frame
@@ -32,13 +26,8 @@ public class Hexagon : MonoBehaviourPunCallbacks
 
     public void OnCollisionEnter(Collision collision) 
     {
-        if(collision.transform.CompareTag("MidBase") && photonView.ViewID == 0)
-            Destroy(gameObject);
-        
-        else if(collision.transform.CompareTag("MidBase") && PhotonNetwork.IsMasterClient) //&& PhotonNetwork.IsMasterClient
-            PhotonNetwork.Destroy(gameObject);        
-            
-        return;
+        if(collision.transform.CompareTag("MidBase"))
+            Destroy(gameObject);            
     }   
 
 }

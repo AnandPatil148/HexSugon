@@ -8,12 +8,12 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("References")]
     public CanvasManagerSingle canvasManager;
+    public Rigidbody rb;
 
 
     [Header("Movement")]
-    Vector3 moveDirection;
     public Transform orientation;
-    public Rigidbody rb;
+    Vector3 moveDirection;
     public float moveSpeed;
 
     
