@@ -607,7 +607,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1045682725}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Launcher, Assembly-CSharp
         m_MethodName: CreateRoom
         m_Mode: 1
@@ -1553,6 +1553,7 @@ GameObject:
   - component: {fileID: 537464443}
   - component: {fileID: 537464442}
   - component: {fileID: 537464441}
+  - component: {fileID: 537464444}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1626,6 +1627,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &537464444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537464440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2103778458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PreferredRunner: 0
+  Components:
+  - {fileID: 537464441}
+  _guid: ca81f77e-2516-45c4-
 --- !u!1 &548193469
 GameObject:
   m_ObjectHideFlags: 0
@@ -2993,7 +3010,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1045682724}
-  - component: {fileID: 1045682725}
   - component: {fileID: 1045682723}
   - component: {fileID: 1045682722}
   - component: {fileID: 1045682721}
@@ -3164,29 +3180,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1045682725
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1045682716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f76e73db9b0bbe4fa591d2a4030512c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menuManager: {fileID: 1045682723}
-  roomManager: {fileID: 9105257982793216915, guid: 05420c0d36373a94686304425d1f52a2, type: 3}
-  nickName: {fileID: 437643564}
-  roomNameInputField: {fileID: 573159980}
-  roomListContent: {fileID: 215554001}
-  roomListItemPrefab: {fileID: 3623832904739567816, guid: 50c2db56c63c8fa46804148eca6a8f9c, type: 3}
-  roomNameText: {fileID: 252571639}
-  playerListContent: {fileID: 212303197}
-  playerListItemPrefab: {fileID: 1103725955666416578, guid: fb76d4daaa6c46643803b8bf7c6a07ea, type: 3}
-  startGameObject: {fileID: 1160244462}
-  errorText: {fileID: 297497686}
 --- !u!1 &1102780312
 GameObject:
   m_ObjectHideFlags: 0
@@ -3813,7 +3806,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1045682725}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Launcher, Assembly-CSharp
         m_MethodName: StartGame
         m_Mode: 1
@@ -4291,7 +4284,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1045682725}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Launcher, Assembly-CSharp
         m_MethodName: LeaveRoom
         m_Mode: 1
