@@ -17,6 +17,10 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     {
            
     }
+
+    public void OnConnectedToServer(NetworkRunner runner) { Debug.Log("OnConnectedToServer"); }
+    
+    
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player) 
     {
 
@@ -37,7 +41,6 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         
     }
 
-    public void OnConnectedToServer(NetworkRunner runner) { Debug.Log("OnConnectedToServer"); }
 
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) { }
