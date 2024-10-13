@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 3428128533840552081}
   - component: {fileID: 9196264640554587572}
   - component: {fileID: 6343695410643467553}
+  - component: {fileID: 1053324429255913717}
+  - component: {fileID: 3950343257284161588}
+  - component: {fileID: 5363367319229779430}
   m_Layer: 0
   m_Name: Player MP
   m_TagString: Untagged
@@ -72,7 +75,79 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 9196264640554587572}
+  - {fileID: 3950343257284161588}
+  - {fileID: 5363367319229779430}
   SimulationBehaviours: []
+--- !u!114 &1053324429255913717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3428128533840552080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bc0b30ddd2ca1b4cac9cff5759a8a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3950343257284161588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3428128533840552080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a75d8626bb6784449761af8fffae62a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  playerMovementNetwork: {fileID: 5363367319229779430}
+--- !u!114 &5363367319229779430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3428128533840552080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47dd43453980ef64280eb5b5fa571048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  InterpolationSpace: 0
+  InterpolationTarget: {fileID: 9000247480202162550}
+  InterpolateErrorCorrection: 1
+  InterpolatedErrorCorrectionSettings:
+    MinRate: 3.3
+    MaxRate: 10
+    PosBlendStart: 0.25
+    PosBlendEnd: 1
+    PosMinCorrection: 0.025
+    PosTeleportDistance: 2
+    RotBlendStart: 0.1
+    RotBlendEnd: 0.5
+    RotTeleportRadians: 1.5
+  UseLegacySharedModeInterpolation: 0
+  TargetInterpolationDelay: 0.03
+  rb: {fileID: 9000247480202162554}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 8
+  moveSpeed: 7
+  maxSpeed: 7
+  jumpForce: 6
+  jumpCoolDown: 0.2
+  airMultiplier: 2
+  acceleration: 10
+  braking: 10
+  playerHeight: 0
+  readToJump: 1
+  rotationSpeed: 0
+  _IsGrounded: 0
+  _Velocity: {x: 0, y: 0, z: 0}
 --- !u!1 &3428128533900753986
 GameObject:
   m_ObjectHideFlags: 0
@@ -1104,7 +1179,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9000247480202162545}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ba514d881f3ebf40bcc60326efd6149, type: 3}
   m_Name: 
