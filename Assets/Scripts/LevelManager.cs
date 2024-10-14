@@ -11,6 +11,11 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(2);
     }
 
+    public void LoadMultiPlayerScene()
+    {
+        SceneManager.LoadScene(1);
+    }
+
     public void Quit()
     {
         Application.Quit();
