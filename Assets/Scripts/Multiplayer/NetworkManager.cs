@@ -26,12 +26,6 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         
     }
 
-    private void Update()
-    {
-
-        
-    }
-
 
     async void StartGame(GameMode mode)
     {   

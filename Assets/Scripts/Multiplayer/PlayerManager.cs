@@ -5,7 +5,7 @@ using Fusion;
 
 public class PlayerManager : NetworkBehaviour   
 {
-
+    public static PlayerManager instance;
     [SerializeField] private NetworkCharacterController _cc;
     public new GameObject camera;
     public float sensX;
@@ -18,11 +18,11 @@ public class PlayerManager : NetworkBehaviour
     void Start()
     {
 
-        if(!Runner.IsServer)
+        if(!Object.HasInputAuthority)
         {
             camera.SetActive(false);
         }
-
+        instance = this;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }

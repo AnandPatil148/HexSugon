@@ -158,7 +158,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cc: {fileID: 5118667700754024660}
   camera: {fileID: 7150945285885852761}
-  playerModel: {fileID: 6523536846451988965}
   sensX: 150
   sensY: 150
   moveSpeed: 300
