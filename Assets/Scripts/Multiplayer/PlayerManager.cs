@@ -21,7 +21,14 @@ public class PlayerManager : NetworkBehaviour
         if(!Object.HasInputAuthority)
         {
             camera.SetActive(false);
+            return;
         }
+        
+        foreach(Transform trans in transform.GetComponentsInChildren<Transform>(true))
+        {
+            trans.gameObject.layer = LayerMask.NameToLayer("LocalPlayerModel");
+        }
+
         instance = this;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -29,6 +36,10 @@ public class PlayerManager : NetworkBehaviour
 
     private void Update() 
     {
+        if(!Object.HasInputAuthority)
+            return;
+
+
         // rotate camera
         float mouseY = Input.GetAxis("Mouse Y") * sensY * Time.deltaTime; // get mouse vertical input and apply it as x axis rotation
         xRotation -= mouseY;
