@@ -70,13 +70,16 @@ public class PlayerManager : NetworkBehaviour
 
         }
     }
+
+    public void Respawn()
+    {
+        transform.position = new Vector3(0, 2 , 0);
+    }
     
     void CheckFallRespawn()
     {
         if(transform.position.y <= -10)
-        {
-            transform.position = new Vector3(0, 2 , 0);
-        }
+            Respawn();
     }
 
 }
