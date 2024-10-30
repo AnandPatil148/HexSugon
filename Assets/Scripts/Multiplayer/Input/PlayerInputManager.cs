@@ -12,8 +12,6 @@ public class PlayerInputManager : MonoBehaviour
 
     public float sensX;
     public float sensY;
-    private float xRotation;
-    private float yRotation;
 
     // Start is called before the first frame update
     void Start()

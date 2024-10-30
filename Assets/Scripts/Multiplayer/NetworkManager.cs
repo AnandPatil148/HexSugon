@@ -94,27 +94,6 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         if(playerInputManager != null)
             input.Set(playerInputManager.GetNetworkInputData());
         
-        /*
-        var data = new NetworkInputData();
-
-        // store mouse horizontal movement
-        float mouseX = Input.GetAxis("Mouse X"); // store mouse vertical movement
-
-        data.mouseXRotation = mouseX;
-
-        // store keyboard horizontal and vertical movement
-        float x = Input.GetAxis("Horizontal"); // store horizontal movement 1 or -1
-        float z = Input.GetAxis("Vertical"); // store vertical movement 1 or -1
-        data.moveDirection += new Vector3(x, 0, z); // store move direction
-
-        // store jump input
-        if (Input.GetButtonDown("Jump"))
-            data.isJumpPressed = true;
-
-
-        input.Set(data); // set input data on NetworkInput
-        data.isJumpPressed = false;
-        */
     }
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
