@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
+using TMPro;
 
 public class PlayerManager : NetworkBehaviour   
 {
@@ -19,6 +20,12 @@ public class PlayerManager : NetworkBehaviour
     private float yRotation;
     private Vector3 viewInput;
 
+    // UI
+    public TMP_Text nickNameText; // Nickname Bill board
+
+    [Networked, OnChangedRender(nameof(OnNickNameChanged))]
+    public string NickName { get; set; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,13 +36,16 @@ public class PlayerManager : NetworkBehaviour
             return;
         }
         
+        instance = this;
+        
+        RPC_SetNickName(PlayerPrefs.GetString("NickName"));
+        
         // Set Local Players Layer to LocalPlayerModel for camera to not render
         foreach(Transform trans in transform.GetComponentsInChildren<Transform>(true))
         {
             trans.gameObject.layer = LayerMask.NameToLayer("LocalPlayerModel");
         }
 
-        instance = this;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -43,7 +53,11 @@ public class PlayerManager : NetworkBehaviour
     private void Update() 
     {
         if(!Object.HasInputAuthority)
+        {
+            this.gameObject.name = NickName;
+            this.nickNameText.text = NickName;
             return;
+        }
 
         viewInput = inputManager.GetViewInput();
 
@@ -52,6 +66,8 @@ public class PlayerManager : NetworkBehaviour
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f); // clamp vertical rotation
         playerCam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0) ; // rotate camera on x axis
+
+
 
     }
 
@@ -88,5 +104,20 @@ public class PlayerManager : NetworkBehaviour
         if(transform.position.y <= -10)
             Respawn();
     }
+
+    private void OnNickNameChanged()
+    {
+        nickNameText.text = NickName.ToString();
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
+    public void RPC_SetNickName(string nickName, RpcInfo info = default)
+    {
+        NickName = nickName;
+        this.gameObject.name = NickName;
+        this.nickNameText.text = NickName;
+
+    }
+        
 
 }

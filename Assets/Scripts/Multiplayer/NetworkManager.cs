@@ -106,7 +106,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
     {
-        Debug.Log("OnInputMissing");
+        // Debug.Log("OnInputMissing");
     }
 
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
