@@ -6,13 +6,18 @@ using Fusion;
 public class PlayerManager : NetworkBehaviour   
 {
     public static PlayerManager instance;
+    
     [SerializeField] private NetworkCharacterController _cc;
-    public new GameObject camera;
-    public float sensX;
-    public float sensY;
+    
+    // Compotents and Player Cam
+    public GameObject playerCam;
+    public PlayerInputManager inputManager;
+
     public int moveSpeed;
+    
     private float xRotation;
     private float yRotation;
+    private Vector3 viewInput;
 
     // Start is called before the first frame update
     void Start()
@@ -20,10 +25,11 @@ public class PlayerManager : NetworkBehaviour
 
         if(!Object.HasInputAuthority)
         {
-            camera.SetActive(false);
+            playerCam.SetActive(false);
             return;
         }
         
+        // Set Local Players Layer to LocalPlayerModel for camera to not render
         foreach(Transform trans in transform.GetComponentsInChildren<Transform>(true))
         {
             trans.gameObject.layer = LayerMask.NameToLayer("LocalPlayerModel");
@@ -39,12 +45,13 @@ public class PlayerManager : NetworkBehaviour
         if(!Object.HasInputAuthority)
             return;
 
+        viewInput = inputManager.GetViewInput();
 
         // rotate camera
-        float mouseY = Input.GetAxis("Mouse Y") * sensY * Time.deltaTime; // get mouse vertical input and apply it as x axis rotation
+        float mouseY = viewInput.y * Time.deltaTime; // get mouse vertical input and apply it as x axis rotation
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f); // clamp vertical rotation
-        camera.transform.localRotation = Quaternion.Euler(xRotation, 0, 0) ; // rotate camera on x axis
+        playerCam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0) ; // rotate camera on x axis
 
     }
 
@@ -53,7 +60,7 @@ public class PlayerManager : NetworkBehaviour
         if(GetInput(out NetworkInputData data))
         {
             // rotate player
-            yRotation = data.mouseXRotation * sensX * Runner.DeltaTime;
+            yRotation = data.mouseXRotation * Runner.DeltaTime;
             transform.Rotate(0, yRotation, 0); // rotate player on y axis
 
             // move player

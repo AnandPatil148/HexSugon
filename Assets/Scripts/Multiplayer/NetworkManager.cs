@@ -13,6 +13,8 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     public NetworkPrefabRef _prefabRef;
     public Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new();
 
+    public PlayerInputManager playerInputManager;
+
     public MenuManager MenuManager;
 
 
@@ -64,6 +66,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         {
             // MenuManager.OpenMenu("RoomMenu");
 
+            // Spawn Players Prefab
             Vector3 spawnPosition = Vector3.up;
             NetworkObject networkObject = runner.Spawn(_prefabRef, spawnPosition, Quaternion.identity, player);
 
@@ -77,6 +80,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     {
         if(_spawnedCharacters.TryGetValue(player, out NetworkObject networkObject))
         {
+            // Despawn Player Prefab
             runner.Despawn(networkObject);
             _spawnedCharacters.Remove(player);
         }
@@ -84,6 +88,13 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
+        if(playerInputManager == null && PlayerManager.instance != null)
+            playerInputManager = PlayerManager.instance.GetComponent<PlayerInputManager>();
+
+        if(playerInputManager != null)
+            input.Set(playerInputManager.GetNetworkInputData());
+        
+        /*
         var data = new NetworkInputData();
 
         // store mouse horizontal movement
@@ -102,6 +113,8 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 
 
         input.Set(data); // set input data on NetworkInput
+        data.isJumpPressed = false;
+        */
     }
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
