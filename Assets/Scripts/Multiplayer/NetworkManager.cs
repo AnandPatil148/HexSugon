@@ -34,7 +34,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     }
 
 
-    async void StartGame(GameMode mode)
+    public async void StartGame(GameMode mode, String roomName)
     {   
 
         // Create The NetworkSceneInfo from current scene
@@ -47,22 +47,12 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         await _runner.StartGame(new StartGameArgs
         {
             GameMode = mode,
-            SessionName = "TestRoom",
+            SessionName = roomName,
             Scene = sceneInfo,
             SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>(),
         });
 
         MenuManager.gameObject.SetActive(false);// close the menu temporarily
-    }
-
-    public void StartHost()
-    {
-        StartGame(GameMode.Host);
-    }    
-
-    public void StartClient()
-    {
-        StartGame(GameMode.Client);
     }
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)

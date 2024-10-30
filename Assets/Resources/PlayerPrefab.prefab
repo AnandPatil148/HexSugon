@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6610510970666921740}
   - component: {fileID: 8674879238258141745}
   m_Layer: 0
-  m_Name: Orientation
+  m_Name: PlayerHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -160,8 +160,6 @@ MonoBehaviour:
   _cc: {fileID: 5118667700754024660}
   playerCam: {fileID: 7150945285885852761}
   inputManager: {fileID: 2885268596835969899}
-  sensX: 150
-  sensY: 150
   moveSpeed: 300
 --- !u!114 &2885268596835969899
 MonoBehaviour:
@@ -252,7 +250,7 @@ GameObject:
   - component: {fileID: 2667637561394598158}
   - component: {fileID: 5582431223047925661}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: PlayerBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
