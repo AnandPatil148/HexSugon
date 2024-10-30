@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
         PlayerPrefs.SetString("NickName", NickName);
         PlayerPrefs.Save();
         
-        menuManager.OpenMenu("MainMenu");
+        menuManager.OpenMenu("HomeMenu");
     }
 
     public void StartHost()
