@@ -9,6 +9,8 @@ using System;
 public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 {
 
+    public static NetworkManager instance;
+
     public NetworkRunner _runner;
     public NetworkPrefabRef _prefabRef;
     public Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new();
@@ -25,6 +27,9 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         // Create the Fusion runner and let it know that we will provide user input
         _runner = gameObject.GetComponent<NetworkRunner>();
         _runner.ProvideInput = true;
+
+        if(instance == null)
+            instance = this;
         
     }
 
