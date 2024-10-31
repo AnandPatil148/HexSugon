@@ -5,6 +5,7 @@ using Fusion.Sockets;
 using UnityEngine;
 using Fusion;
 using System;
+using System.Threading.Tasks;
 /*
 TODO: 
     - Add Player Disconnecting 
@@ -22,16 +23,13 @@ TODO:
 public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 {
 
-    public static NetworkManager instance;
+    public static NetworkManager Instance;
 
     public NetworkRunner _runner;
     public NetworkPrefabRef _prefabRef;
     public Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new();
 
     public PlayerInputManager playerInputManager;
-
-    public MenuManager MenuManager;
-
 
     // Start is called before the first frame update
     private void Start() 
@@ -41,27 +39,32 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         _runner = gameObject.GetComponent<NetworkRunner>();
         _runner.ProvideInput = true;
 
-        if(instance == null)
-            instance = this;
+
+        if(Instance == null)
+            Instance = this;
         
     }
 
+    public async Task JoinLobby(string lobbyName)
+    {
+        // Join Lobby
+        await _runner.JoinSessionLobby(SessionLobby.Custom, lobbyName);
+    }
 
-    public async void StartGame(GameMode mode, String roomName)
+
+    public async Task InitializeRunner(GameMode mode, string sessionName, string sceneName = "", string lobbyName = "")
     {   
 
         // Create The NetworkSceneInfo from current scene
-        var sceneInfo = new NetworkSceneInfo();
-        var sceneRef = SceneRef.FromIndex(SceneManager.GetActiveScene().buildIndex);
-        if (sceneRef.IsValid)
-            sceneInfo.AddSceneRef(sceneRef, LoadSceneMode.Additive);
-
-
+        SceneRef sceneRef = SceneRef.FromIndex(3); 
+        
+        // Start the game session with the scene or Join Session 
         await _runner.StartGame(new StartGameArgs
         {
             GameMode = mode,
-            SessionName = roomName,
-            Scene = sceneInfo,
+            SessionName = sessionName,
+            CustomLobbyName = lobbyName, // "MainLobby"
+            Scene = sceneRef,
             SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>(),
         });
 
