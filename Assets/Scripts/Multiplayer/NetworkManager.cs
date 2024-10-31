@@ -68,7 +68,21 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
             SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>(),
         });
 
-        MenuManager.gameObject.SetActive(false);// close the menu temporarily
+        // _runner.LoadScene(0);
+
+    }
+    public async void CreateSession(GameMode mode, string sessionName, string sceneName = "", string lobbyName = "")
+    {
+        //NetworkManager.instance.StartGame(GameMode.Host, roomNameInputField.text);
+        // await NetworkManager.instance.InitializeRunner(GameMode.Host, sessionName:"TestRoom", sceneName:"MLevel1"); // TODO: replace with real room name
+        // gameObject.SetActive(false);
+        await NetworkManager.Instance.InitializeRunner(GameMode.Host, sessionName, sceneName, lobbyName); // TODO: replace with real room name
+    }    
+
+    public async void JoinSession(SessionInfo sessionInfo)
+    {
+
+        await NetworkManager.Instance.InitializeRunner(GameMode.Client, sessionInfo.Name);
     }
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
@@ -106,6 +120,40 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
             input.Set(playerInputManager.GetNetworkInputData());
         
     }
+    public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
+    {
+        Debug.Log("OnSessionListUpdated");
+
+        if(UIManager.Instance == null)
+        {
+            Debug.Log("UIManager is null");
+            return;
+        }
+        UISessionsManager uiSessionsManager = UIManager.Instance.UISessionsManager;
+
+        if( sessionList.Count == 0 )
+        {
+            Debug.Log("No sessions found");
+            uiSessionsManager.ClearList();
+            
+            // Show that no sessions were found in status text
+            uiSessionsManager.OnNoSessionsFound(); 
+        }
+        else
+        {
+            Debug.Log("Sessions found");
+            uiSessionsManager.ClearList();
+            uiSessionsManager.ClearStatusText();
+
+            foreach (SessionInfo sessionInfo in sessionList )
+            {
+                uiSessionsManager.AddToList(sessionInfo);
+            }
+        }
+
+
+
+    }    
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
     {
@@ -130,7 +178,6 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token) { }
     public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason) { }
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) { }
-    public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) { }    
     public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data) { }
     public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken) { }
     public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data) { }

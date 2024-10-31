@@ -59,15 +59,25 @@ public class UIManager : MonoBehaviour
         menuManager.OpenMenu("HomeMenu");
     }
 
-    public void StartHost()
+    // If Find Game button is clicked
+    public void OnFindGameClick()
+    {
+        UISessionsManager.OnLoadingSessions();
+        menuManager.OpenMenu("FindSessionsMenu");
+    }
+
+    public void OnCreateSession()
     {
         //NetworkManager.instance.StartGame(GameMode.Host, roomNameInputField.text);
-        NetworkManager.instance.StartGame(GameMode.Host, "TestRoom"); // TODO: replace with real room name
+        // await NetworkManager.instance.InitializeRunner(GameMode.Host, sessionName:"TestRoom", sceneName:"MLevel1"); // TODO: replace with real room name
+        //await NetworkManager.Instance.InitializeRunner(GameMode.Host, sessionName:"TestRoom"); // TODO: replace with real room name
+        gameObject.SetActive(false);
+        NetworkManager.Instance.CreateSession(GameMode.Host, roomNameInputField.text, "MLevel1", LobbyName);
     }    
 
-    public void StartClient()
+    public void OnJoinSession(SessionInfo sessionInfo)
     {
-        NetworkManager.instance.StartGame(GameMode.Client, roomNameInputField.text);
+        NetworkManager.Instance.JoinSession(sessionInfo);
     }
 
     public void LoadSinglePlayerScene()
