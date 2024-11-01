@@ -15,9 +15,9 @@ TODO:
     - Pickups and stuff as booster or collectables
     - UI
     - Players able to push each other
-    - Sessions to track and add respective button. Fusion lobby system
-    - Add Join room button with proper setting as rooms get created. Fusion lobby feature
-    - Add Player Listing in lobby menu with their nicknames
+    - Sessions to track and add respective button. Fusion lobby system - done
+    - Add Join room button with proper setting as rooms get created. Fusion lobby feature - done
+    - Add Player Listing in room menu with their nicknames
 */
 
 public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
