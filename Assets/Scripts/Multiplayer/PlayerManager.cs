@@ -30,7 +30,7 @@ public class PlayerManager : NetworkBehaviour
     void Start()
     {
 
-        if(!Object.HasInputAuthority)
+        if(!HasInputAuthority)
         {
             playerCam.SetActive(false);
             return;
@@ -38,7 +38,7 @@ public class PlayerManager : NetworkBehaviour
         
         InstanceLocal = this;
         
-        RPC_SetNickName(PlayerPrefs.GetString("NickName"));
+        RPC_SetNickNameP(PlayerPrefs.GetString("NickName"));
         
         // Set Local Players Layer to LocalPlayerModel for camera to not render
         foreach(Transform trans in transform.GetComponentsInChildren<Transform>(true))
@@ -111,7 +111,7 @@ public class PlayerManager : NetworkBehaviour
     }
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
-    public void RPC_SetNickName(string nickName, RpcInfo info = default)
+    public void RPC_SetNickNameP(string nickName, RpcInfo info = default)
     {
         NickName = nickName;
         this.gameObject.name = NickName;
