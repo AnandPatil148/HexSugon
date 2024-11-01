@@ -30,6 +30,8 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     public Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new();
 
     public PlayerInputManager playerInputManager;
+    
+    public string NickName;
 
     // Start is called before the first frame update
     private void Start() 
@@ -49,6 +51,11 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     {
         // Join Lobby
         await _runner.JoinSessionLobby(SessionLobby.Custom, lobbyName);
+
+        NickName = UIManager.Instance.nickNameInputField.text;
+
+        UIManager.Instance.menuManager.OpenMenu("HomeMenu");
+
     }
 
 
