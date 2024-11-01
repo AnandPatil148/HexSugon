@@ -63,7 +63,12 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     {   
 
         // Create The NetworkSceneInfo from current scene
-        SceneRef sceneRef = SceneRef.FromIndex(SceneManager.GetActiveScene().buildIndex); 
+        SceneRef sceneRef = SceneRef.FromIndex(SceneManager.GetActiveScene().buildIndex);
+
+        // Create The NetworkSceneInfo from current scene
+        NetworkSceneInfo sceneInfo = new();
+        if( sceneRef.IsValid )
+            sceneInfo.AddSceneRef(sceneRef, LoadSceneMode.Single); 
         
         // Start the game session with the scene or Join Session 
         await _runner.StartGame(new StartGameArgs
@@ -74,6 +79,9 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
             Scene = sceneRef,
             SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>(),
         });
+
+        UIManager.Instance.SetSessionInfo(sessionName);
+        UIManager.Instance.menuManager.OpenMenu("SessionMenu");
 
         // _runner.LoadScene(0);
 
