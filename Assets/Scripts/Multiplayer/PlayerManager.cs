@@ -6,7 +6,7 @@ using TMPro;
 
 public class PlayerManager : NetworkBehaviour   
 {
-    public static PlayerManager instance;
+    public static PlayerManager InstanceLocal; // Local Player Manager
     
     [SerializeField] private NetworkCharacterController _cc;
     
@@ -36,7 +36,7 @@ public class PlayerManager : NetworkBehaviour
             return;
         }
         
-        instance = this;
+        InstanceLocal = this;
         
         RPC_SetNickName(PlayerPrefs.GetString("NickName"));
         
