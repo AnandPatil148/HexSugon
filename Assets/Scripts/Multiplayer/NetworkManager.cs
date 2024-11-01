@@ -52,16 +52,16 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     }
 
 
-    public async Task InitializeRunner(GameMode mode, string sessionName, string sceneName = "", string lobbyName = "")
+    public async Task InitializeRunner(GameMode gameMode, string sessionName, string lobbyName = "")
     {   
 
         // Create The NetworkSceneInfo from current scene
-        SceneRef sceneRef = SceneRef.FromIndex(3); 
+        SceneRef sceneRef = SceneRef.FromIndex(SceneManager.GetActiveScene().buildIndex); 
         
         // Start the game session with the scene or Join Session 
         await _runner.StartGame(new StartGameArgs
         {
-            GameMode = mode,
+            GameMode = gameMode,
             SessionName = sessionName,
             CustomLobbyName = lobbyName, // "MainLobby"
             Scene = sceneRef,
@@ -71,18 +71,24 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         // _runner.LoadScene(0);
 
     }
-    public async void CreateSession(GameMode mode, string sessionName, string sceneName = "", string lobbyName = "")
+    public async void CreateSession(GameMode mode, string sessionName, string lobbyName = "")
     {
         //NetworkManager.instance.StartGame(GameMode.Host, roomNameInputField.text);
         // await NetworkManager.instance.InitializeRunner(GameMode.Host, sessionName:"TestRoom", sceneName:"MLevel1"); // TODO: replace with real room name
         // gameObject.SetActive(false);
-        await NetworkManager.Instance.InitializeRunner(GameMode.Host, sessionName, sceneName, lobbyName); // TODO: replace with real room name
+        await InitializeRunner(GameMode.Host, sessionName, lobbyName); // TODO: replace with real room name
     }    
 
     public async void JoinSession(SessionInfo sessionInfo)
     {
 
-        await NetworkManager.Instance.InitializeRunner(GameMode.Client, sessionInfo.Name);
+        await InitializeRunner(GameMode.Client, sessionInfo.Name);
+    }
+
+    public void StartGame()
+    {
+        if(_runner.IsServer)
+            _runner.LoadScene("MLevel1");
     }
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)

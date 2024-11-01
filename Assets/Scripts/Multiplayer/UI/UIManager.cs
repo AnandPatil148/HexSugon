@@ -72,7 +72,7 @@ public class UIManager : MonoBehaviour
         // await NetworkManager.instance.InitializeRunner(GameMode.Host, sessionName:"TestRoom", sceneName:"MLevel1"); // TODO: replace with real room name
         //await NetworkManager.Instance.InitializeRunner(GameMode.Host, sessionName:"TestRoom"); // TODO: replace with real room name
         gameObject.SetActive(false);
-        NetworkManager.Instance.CreateSession(GameMode.Host, roomNameInputField.text, "MLevel1", LobbyName);
+        NetworkManager.Instance.CreateSession( GameMode.Host, sessionName: roomNameInputField.text, lobbyName: LobbyName);
     }    
 
     public void OnJoinSession(SessionInfo sessionInfo)
