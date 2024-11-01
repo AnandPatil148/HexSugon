@@ -12,13 +12,17 @@ public class UIManager : MonoBehaviour
     public MenuManager menuManager;
 
     public UISessionsManager UISessionsManager;
+    public UIPlayersListManager UIPlayersListManager;
 
+    [Header("TMP Fields")]
     public TMP_InputField nickNameInputField;
     public TMP_InputField roomNameInputField;
+    public TMP_Text sessionNameText;
     public TMP_Text nickNameText;
 
-    public static String NickName;
-    public static String LobbyName = "MainLobby";
+    public string LobbyName = "MainLobby";
+    public string SessionName;
+    public static string NickName;
 
     // Start is called before the first frame update
     void Start()
@@ -56,7 +60,7 @@ public class UIManager : MonoBehaviour
 
         await NetworkManager.Instance.JoinLobby(LobbyName); // TODO: replace with real Lobby ID
         
-        menuManager.OpenMenu("HomeMenu");
+        menuManager.OpenMenu("LoadingMenu");
     }
 
     // If Find Game button is clicked
@@ -68,16 +72,27 @@ public class UIManager : MonoBehaviour
 
     public void OnCreateSession()
     {
-        //NetworkManager.instance.StartGame(GameMode.Host, roomNameInputField.text);
-        // await NetworkManager.instance.InitializeRunner(GameMode.Host, sessionName:"TestRoom", sceneName:"MLevel1"); // TODO: replace with real room name
-        //await NetworkManager.Instance.InitializeRunner(GameMode.Host, sessionName:"TestRoom"); // TODO: replace with real room name
-        gameObject.SetActive(false);
+        // gameObject.SetActive(false);
         NetworkManager.Instance.CreateSession( GameMode.Host, sessionName: roomNameInputField.text, lobbyName: LobbyName);
+
+        menuManager.OpenMenu("LoadingMenu");
     }    
 
     public void OnJoinSession(SessionInfo sessionInfo)
     {
         NetworkManager.Instance.JoinSession(sessionInfo);
+        menuManager.OpenMenu("LoadingMenu");
+    }
+
+    public void SetSessionInfo(string sessionName)
+    {
+        sessionNameText.text = sessionName;
+        SessionName = sessionName;
+    }
+
+    public void OnStartGame()
+    {
+        NetworkManager.Instance.StartGame();
     }
 
     public void LoadSinglePlayerScene()

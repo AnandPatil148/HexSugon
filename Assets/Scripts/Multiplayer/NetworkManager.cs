@@ -26,8 +26,8 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     public static NetworkManager Instance;
 
     public NetworkRunner _runner;
-    public NetworkPrefabRef _prefabRef;
-    public Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new();
+    public NetworkPrefabRef _playerPrefabRef;
+    public Dictionary<PlayerRef, NetworkObject[]> _spawnedCharacters = new();
 
     public PlayerInputManager playerInputManager;
     
@@ -102,8 +102,9 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void StartGame()
     {
-        if(_runner.IsServer)
-            _runner.LoadScene("MLevel1");
+        // Host/Server loads Game Scene
+        if(_runner.IsSceneAuthority)
+            _runner.LoadScene("MLevel1", LoadSceneMode.Additive); 
     }
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
@@ -112,11 +113,14 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         {
             // MenuManager.OpenMenu("RoomMenu");
 
-            // Spawn Players Prefab
-            Vector3 spawnPosition = Vector3.up;
-            NetworkObject networkObject = runner.Spawn(_prefabRef, spawnPosition, Quaternion.identity, player);
+            // Spawn Players Prefab TODO: Make a player Menu Item to list in room menu
+            // Vector3 spawnPosition = Vector3.up;
+            NetworkObject networkObject = UIManager.Instance.UIPlayersListManager.AddToList(NickName); //runner.Spawn(_prefabRef, spawnPosition, Quaternion.identity, player);
+            NetworkObject[] networkObjects = new NetworkObject[2];
+            networkObjects[0] = networkObject;
+            networkObjects[1] = null;
 
-            _spawnedCharacters.Add(player, networkObject); // store so we can destroy it later
+            _spawnedCharacters.Add(player, networkObjects); // store the menu item so we can destroy it later
 
         }
         Debug.Log("Player joined: " + player);
@@ -124,18 +128,19 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-        if(_spawnedCharacters.TryGetValue(player, out NetworkObject networkObject))
+        if(_spawnedCharacters.TryGetValue(player, out NetworkObject[] networkObjects))
         {
             // Despawn Player Prefab
-            runner.Despawn(networkObject);
-            _spawnedCharacters.Remove(player);
+            foreach(NetworkObject networkObject in networkObjects)
+                runner.Despawn(networkObject);
+                _spawnedCharacters.Remove(player);
         }
     }
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        if(playerInputManager == null && PlayerManager.instance != null)
-            playerInputManager = PlayerManager.instance.GetComponent<PlayerInputManager>();
+        if(playerInputManager == null && PlayerManager.InstanceLocal != null)
+            playerInputManager = PlayerManager.InstanceLocal.GetComponent<PlayerInputManager>();
 
         if(playerInputManager != null)
             input.Set(playerInputManager.GetNetworkInputData());
@@ -143,7 +148,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     }
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
     {
-        Debug.Log("OnSessionListUpdated");
+        // Debug.Log("OnSessionListUpdated");
 
         if(UIManager.Instance == null)
         {
@@ -171,10 +176,28 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
                 uiSessionsManager.AddToList(sessionInfo);
             }
         }
-
-
-
     }    
+    public void OnSceneLoadStart(NetworkRunner runner) 
+    {
+        // Set Scene visibility to false
+    }
+    public void OnSceneLoadDone(NetworkRunner runner) 
+    {
+        if(SceneManager.GetActiveScene().name == "MLevel1" && runner.IsServer)
+        {
+            foreach(PlayerRef player in _spawnedCharacters.Keys)
+            {
+                // Spawn Players Prefab
+                Vector3 spawnPosition = Vector3.up;
+                NetworkObject networkObject = runner.Spawn(_playerPrefabRef, spawnPosition, Quaternion.identity, player);
+
+                _spawnedCharacters[player][1] = networkObject; // store the player model so we can destroy it later
+
+            }
+
+        }
+
+    }
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
     {
@@ -186,15 +209,8 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         Debug.Log("NetworkRunner Shutdown!");
     }
 
-    public void OnConnectedToServer( NetworkRunner runner )
-    {
-        Debug.Log("Connected to server!");
-
-    }
-    public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason)
-    {
-        Debug.Log("Disconnected from server!");
-    }
+    public void OnConnectedToServer( NetworkRunner runner ) { }
+    public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason) { }
     
     public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token) { }
     public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason) { }
@@ -203,8 +219,6 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken) { }
     public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data) { }
     public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress) { }
-    public void OnSceneLoadStart(NetworkRunner runner) { }
-    public void OnSceneLoadDone(NetworkRunner runner) { }
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject networkObject, PlayerRef playerRef) { }
     public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject networkObject, PlayerRef playerRef) { }
 
