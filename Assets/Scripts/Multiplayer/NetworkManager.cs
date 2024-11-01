@@ -104,7 +104,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     {
         // Host/Server loads Game Scene
         if(_runner.IsSceneAuthority)
-            _runner.LoadScene("MLevel1", LoadSceneMode.Additive); 
+            _runner.LoadScene("MLevel1", LoadSceneMode.Single); 
     }
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
@@ -188,7 +188,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
             foreach(PlayerRef player in _spawnedCharacters.Keys)
             {
                 // Spawn Players Prefab
-                Vector3 spawnPosition = Vector3.up;
+                Vector3 spawnPosition = Vector3.up * 2;
                 NetworkObject networkObject = runner.Spawn(_playerPrefabRef, spawnPosition, Quaternion.identity, player);
 
                 _spawnedCharacters[player][1] = networkObject; // store the player model so we can destroy it later
