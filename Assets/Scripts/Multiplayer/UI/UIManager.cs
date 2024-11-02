@@ -22,7 +22,7 @@ public class UIManager : MonoBehaviour
 
     public string LobbyName = "MainLobby";
     public string SessionName;
-    public static string NickName;
+    public string NickName;
 
     // Start is called before the first frame update
     void Start()

@@ -52,7 +52,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         // Join Lobby
         await _runner.JoinSessionLobby(SessionLobby.Custom, lobbyName);
 
-        NickName = UIManager.Instance.nickNameInputField.text;
+        NickName = UIManager.Instance.NickName;
 
         UIManager.Instance.menuManager.OpenMenu("HomeMenu");
 
