@@ -8,12 +8,11 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("References")]
     public CanvasManagerSingle canvasManager;
+    public Rigidbody rb;
 
 
     [Header("Movement")]
     Vector3 moveDirection;
-    public Transform orientation;
-    public Rigidbody rb;
     public float moveSpeed;
 
     
@@ -114,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
     private void MovePlayer()
     {
         //Calculate Movement direction where we are looking at
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        moveDirection = transform.forward * verticalInput + transform.right * horizontalInput;
 
         //On Ground
         if(grounded)
