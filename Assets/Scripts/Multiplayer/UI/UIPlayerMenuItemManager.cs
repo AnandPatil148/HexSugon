@@ -24,11 +24,13 @@ public class UIPlayerMenuItemManager : NetworkBehaviour
     public void SetPlayerName(string name)
     {
         playerName.text = name;
+        transform.localScale = Vector3.one;
     }
 
 
     public void OnNickNameChanged()
     {
+        Debug.Log("OnNickNameChanged called");
     }
 
 [Rpc(RpcSources.InputAuthority, RpcTargets.All)]

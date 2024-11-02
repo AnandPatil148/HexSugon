@@ -23,7 +23,7 @@ public class UIPlayersListManager : MonoBehaviour
     public NetworkObject AddToList( string playerName)
     {   
         // Add new item to list
-        NetworkObject playerMenuItem = NetworkManager.Instance._runner.Spawn(playerMenuItemPrefab, Vector3.zero, Quaternion.identity);
+        NetworkObject playerMenuItem = NetworkManager.Instance._runner.Spawn(playerMenuItemPrefab, verticalLayoutGroup.transform.position, Quaternion.identity);
         playerMenuItem.transform.SetParent(verticalLayoutGroup.transform); // add to list
         playerMenuItem.GetComponent<UIPlayerMenuItemManager>().SetPlayerName(playerName);
 

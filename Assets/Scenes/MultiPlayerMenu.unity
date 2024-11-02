@@ -954,7 +954,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0000019073, y: -0.000015259}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 600, y: 750}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &212303198
@@ -974,14 +974,14 @@ MonoBehaviour:
     m_Right: 10
     m_Top: 10
     m_Bottom: 10
-  m_ChildAlignment: 0
+  m_ChildAlignment: 1
   m_Spacing: 10
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
   m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
+  m_ChildScaleWidth: 1
+  m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
 --- !u!114 &212303199
 MonoBehaviour:
@@ -2878,7 +2878,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &772400373
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3936,8 +3936,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e391fe7ac4cd2384e9e6961b80b3e5d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMenuItemPrefab: {fileID: 0}
-  verticalLayoutGroup: {fileID: 0}
+  playerMenuItemPrefab: {fileID: 5867085944016785681, guid: ad8be589685a65d4c8b83a08631db693, type: 3}
+  verticalLayoutGroup: {fileID: 212303198}
 --- !u!1 &1102780312
 GameObject:
   m_ObjectHideFlags: 0
@@ -7201,9 +7201,9 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 69486084}
-  - {fileID: 1518484181}
   - {fileID: 1045088103}
   - {fileID: 1045682724}
   - {fileID: 1539958952}
+  - {fileID: 1518484181}
   - {fileID: 1621799377}
   - {fileID: 473752416}

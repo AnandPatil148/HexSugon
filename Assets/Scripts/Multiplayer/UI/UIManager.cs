@@ -52,6 +52,8 @@ public class UIManager : MonoBehaviour
     // Join Fusion Lobby
     public async void JoinFusionLobby()
     {
+        menuManager.OpenMenu("LoadingMenu");
+        
         NickName = nickNameInputField.text;
         nickNameText.text = NickName;
 
@@ -60,7 +62,6 @@ public class UIManager : MonoBehaviour
 
         await NetworkManager.Instance.JoinLobby(LobbyName); // TODO: replace with real Lobby ID
         
-        menuManager.OpenMenu("LoadingMenu");
     }
 
     // If Find Game button is clicked
