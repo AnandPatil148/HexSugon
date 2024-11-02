@@ -30,7 +30,7 @@ public class PlayerManager : NetworkBehaviour
     void Start()
     {
 
-        if(!HasInputAuthority)
+        if(!Object.HasInputAuthority)
         {
             playerCam.SetActive(false);
             return;
